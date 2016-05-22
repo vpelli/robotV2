@@ -1,0 +1,91 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=320, initial-scale=1"/>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="/libs/jquery-1.12.1.min.js"></script>
+    <script src="/libs/interfaceControl.js"></script>
+    <script src="/libs/jsmpg.js"></script>
+    <!--<script src="/libs/socket.io-1.4.5.js"></script>-->
+	<title>My robot V2</title>
+  </head>
+  <style>
+  .divButton{
+    width:150px;height:50px;border:0px solid #00FF00;
+    cursor:hand;
+    background-color: #CCCCCC;
+    text-align:center;vertical-align: center;
+    margin:auto;
+  }
+  td{
+		vertical-align: middle;
+		text-align: center;
+		margin-left: auto;
+		margin-right: auto;
+		align: center;
+	}
+  body {
+			background: #333;
+		}
+		#videoCanvas {
+			/* Always stretch the canvas to 640x480, regardless of its
+			internal size. */
+			width: 320px;
+			height: 240px;
+		}
+  </style>
+
+  <body>
+        <div style="float:left;border:1px solid #333333;">
+            <table style="width:49%" border="0">
+				<tr>
+					<td><div class="divButton" onclick="sendCommand('ledflashleft');"/><img width="50px" src="img/flasher.jpg"/></div></td>
+					<td>&#160;</td>
+					<td><div class="divButton" onclick="sendCommand('ledflashright');"/><img width="50px" src="img/flasher.jpg"/></div></td>
+					<td style="border-bottom:1px solid #000000;" rowspan="2"><div class="divButton" style="width:50px;" onclick="sendCommand('speedup');"/><img width="50px" src="img/speedup.jpg"/></div></td>
+				</tr>
+				<tr>
+					<td><div class="divButton" onclick="sendCommand('frontleft');"/><img width="50px" src="img/frontleft.png"/></div></td>
+					<td><div class="divButton" onclick="sendCommand('front');"/><img width="50px" src="img/front.png"/></div></td>
+					<td><div class="divButton" onclick="sendCommand('frontright');"/><img width="50px" src="img/frontright.png"/></div></td>
+				</tr>
+				<tr>
+					<td><div class="divButton" onclick="sendCommand('left');"/><img width="50px" src="img/left.png"/></div></td>
+					<td><div class="divButton" onclick="sendCommand('stop');"/><img width="50px" src="img/stop.png"/></div></td>
+					<td><div class="divButton" onclick="sendCommand('right');"/><img width="50px" src="img/right.png"/></div></td>
+					<td width="50px" rowspan="2"><div style="width:50px;" class="divButton" onclick="sendCommand('speeddown');"/><img width="50px" src="img/speeddown.jpg"/></div></td>
+				</tr>
+				<tr>
+					<td><div class="divButton" onclick="sendCommand('backleft');"/><img width="50px" src="img/backleft.png"/></div></td>
+					<td><div class="divButton" onclick="sendCommand('back');"/><img width="50px" src="img/back.png"/></div></td>
+					<td><div class="divButton" onclick="sendCommand('backright');"/><img width="50px" src="img/backright.png"/></div></td>
+				</tr>
+          </table>
+        </div>
+        <div style="float:left;border:1px solid #333333;" onclick="startStream();">
+		    <canvas id="videoCanvas" width="320" height="240">
+    		<p>
+    			Please use a browser that supports the Canvas Element, like
+    			<a href="http://www.google.com/chrome">Chrome</a>,
+    			<a href="http://www.mozilla.com/firefox/">Firefox</a>,
+    			<a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
+    		</p>
+    	</canvas>
+		</div>
+
+        <!--<div align="center" style="width:400px;height:400px;border:1px solid #00FF00;">
+            <img src="/tmp/test.png"/>
+        </div>-->
+
+        <script type="text/javascript">
+        // Setup the WebSocket connection and start the player
+        var client = new WebSocket( 'ws://192.168.1.46:8084/' );
+
+        var canvas = document.getElementById('videoCanvas');
+        var player = new jsmpeg(client, {canvas:canvas});
+      </script>
+
+
+  </body>
+</html>
